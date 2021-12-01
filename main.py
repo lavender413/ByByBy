@@ -1,28 +1,27 @@
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = (
+tokens = [
     'NUMBER',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'LPAREN',
-    'RPAREN',
-    'LBRACE',
-    'RBRACE'
-)
+    'IDENT'
+]
 
-# Regular expression rules for simple tokens
-t_PLUS    = r'\+'
-t_MINUS   = r'-'
-t_TIMES   = r'\*'
-t_DIVIDE  = r'/'
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
-t_LBRACE = r'\{'
-t_RBRACE = r'\}'
+literals = ['=','+','-','*','/', '(',')',';','<','>','{','}',',','[',']']
 
+reserved = {
+    'int' : 'INT',
+    'main': 'MAIN',
+    'return': 'RETURN'
+}
+
+tokens = tokens+list(reserved.values())
+
+def t_ident_token(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value, 'IDENT')
+    return t
+
+print(tokens)
 # A regular expression rule with some action code
 def t_NUMBER(t):
     r'(0[xX][0-9a-fA-F]+)|(0[0-7]+)|(\d+)'
@@ -61,10 +60,12 @@ def t_error(t):
 lexer = lex.lex()
 
 data = '''
-0x124
+0x124+{}/<
 0X43
 234
 033
+A
+int main
 '''
 
 lexer.input(data)
