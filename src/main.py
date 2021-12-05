@@ -1,3 +1,4 @@
+import sys
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -69,27 +70,44 @@ def p_expression(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
-
-# Build the lexer
-lexer = lex.lex()
-
-data = '''
-int main(){
-    return 033 ;
-}
-'''
-
-lexer.input(data)
-# while True:
-#     tok = lexer.token()
-#     if not tok: 
-#         break      # No more input
-#     print(tok)
-
-parser = yacc.yacc()
-
-res = parser.parse(data)
-if res == None:
+    # print("Syntax error in input!")
     exit(-1)
-print(res)
+
+if __name__ == '__main__':
+
+    input_file_addr = sys.argv[1]
+    ir_file_addr = sys.argv[2]
+
+    input = ""
+    ir = ""
+
+    with open(input_file_addr,'r', encoding='utf-8') as fin:
+        input = fin.read()
+
+
+    # Build the lexer
+    lexer = lex.lex()
+
+    data = '''
+    int main(){
+        return 033 ;
+    }
+    '''
+
+    lexer.input(data)
+    # while True:
+    #     tok = lexer.token()
+    #     if not tok: 
+    #         break      # No more input
+    #     print(tok)
+
+    parser = yacc.yacc()
+
+    res = parser.parse(data)
+    # if res == None:
+    #     exit(-1)
+    print(res)
+
+    ir = res
+    with open(ir_file_addr,'w',encoding='utf-8') as fout:
+        fout.write(ir)
