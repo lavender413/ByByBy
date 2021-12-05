@@ -94,7 +94,7 @@ if __name__ == '__main__':
     }
     '''
 
-    lexer.input(data)
+    lexer.input(input)
     # while True:
     #     tok = lexer.token()
     #     if not tok: 
