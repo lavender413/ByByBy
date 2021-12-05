@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
     parser = yacc.yacc()
 
-    res = parser.parse(data)
+    res = parser.parse(input)
     # if res == None:
     #     exit(-1)
     print(res)
