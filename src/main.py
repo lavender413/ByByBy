@@ -16,13 +16,13 @@ reserved = {
 }
 
 tokens = tokens+list(reserved.values())
+# print(tokens)
 
 def t_ident_token(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value, 'ident')
     return t
 
-print(tokens)
 # A regular expression rule with some action code
 def t_number(t):
     r'(0[xX][0-9a-fA-F]+)|(0[0-7]+)|(\d+)'
@@ -76,7 +76,7 @@ lexer = lex.lex()
 
 data = '''
 int main(){
-    return 033 ;3
+    return 033 ;
 }
 '''
 
